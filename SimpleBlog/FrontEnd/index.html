@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div class="number-posts" id="negative"></div>
+
+<div class="number-posts" id="all"></div>
+
+<div class="number-posts" id="positive"></div>
+
+<div id="add_post_form">
+
+    <input type="text" id="name" name="name"><br>
+    <input type="text" id="text" name="text"><br>
+    <button type="submit" id="close_post">Close</button> <button type="submit" id="submit">Add Post</button>
+</div>
+
+<br>
+<div id="add_comment_form">
+    <input type="hidden" id="post_id" name="post_id">
+    <input type="text" id="commentator_name" name="name"><br>
+    <input type="text" id="comment" name="comment"><br>
+    <button type="submit" id="close_comment">Close</button><button type="submit" id="comment_submit">Add Comment</button>
+</div>
+
+<br>
+
+<button id="show_post_form">Add post</button>
+
+<div id="posts">
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="./js/my.js"></script>
+
+<style>
+    .single-post {
+        margin-top: 5px;
+        border: 1px solid black;
+    }
+
+    .star {
+        width: 20px;
+        cursor: pointer;
+    }
+
+    .comments {
+        margin-left: 20px;
+    }
+
+</style>
+</body>
+</html>
