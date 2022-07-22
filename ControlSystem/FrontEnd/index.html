@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Users table</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="./styles.css" rel="stylesheet" type="text/css">
+  <script src="my.js"></script>
+
+</head>
+<body>
+
+  <div class="container">
+    <div class="row flex-lg-nowrap">
+      <div class="col">
+        <div class="row flex-lg-nowrap">
+          <div class="col mb-3">
+            <div class="e-panel card">
+              <div class="card-body">
+                <div class="card-title">
+                  <h6 class="mr-2"><span>Users</span></h6>
+                </div>
+<!--                  Верхние кнопки-->
+                <div class="action">
+                  <div class="modal-header">
+                    <button type="button" class="btn btn-success add" data-toggle="modal"
+                            data-target="#user-form-modal" data-whatever="Add a new user" id="addUser">Add
+                    </button>
+                    <select class="all" name="all" size="1" id="setter">
+                      <option value="0" selected>Please select</option>
+                      <option value="1">Set active</option>
+                      <option value="2">Set not active</option>
+                      <option value="3">Delete</option>
+                    </select>
+                    <div class="block_btn">
+                      <button type="button" name="btn_ok" class="btn_ok btn btn-primary default" data-toggle="modal"
+                               id="checkbox-submit" data-whatever="Error">Ok</button>
+                    </div>
+                  </div>
+                </div>
+                <!--                  Верхние кнопки-->
+
+                <div class="e-table">
+                  <div class="table-responsive table-lg mt-3">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th class="align-top">
+                            <div
+                              class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
+                              <input type="checkbox" class="custom-control-input" id="all-items">
+                              <label class="custom-control-label" for="all-items"></label>
+                            </div>
+                          </th>
+                          <th class="max-width">Name</th>
+                          <th class="sortable">Role</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="users-list"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- User Form Modal -->
+        
+        <div class="modal fade" id="user-form-modal" tabindex="-1" aria-labelledby="user-form-modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="UserModalLabel">Add user</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <form>
+                <input type="hidden" id="editUser">
+                <div class="form-group">
+                  <label for="first-name" class="col-form-label">First Name:</label>
+                  <input  type="text" class="form-control" id="first-name">
+                </div>
+                <div class="form-group">
+                  <label for="last-name" class="col-form-label">Last Name:</label>
+                  <input type="text" class="form-control" id="last-name">
+                </div>
+                
+              </form>
+              <div class="form-group">
+                <select class="form-control custom-select" name="role" id="role" size="1">
+                  <option value="3" selected>Role</option>
+                  <option value="1">Admin</option>
+                  <option value="0">User</option>
+                </select>
+              </div>
+              <div class="form-check form-switch form-switch-xl">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Status:</label>
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+
+              </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="userSave" data-dismiss="modal">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <!--            Модальный конфирм-->
+
+        <div class="modal" tabindex="-1" role="dialog" id="mi-modal">
+          <input type="hidden" id="currentUser">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <p>Confirm?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-btn-yes">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-btn-no">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--        _____________________________________________________________________________________-->
+        <div class="modal" tabindex="-1" role="dialog" id="modal-error">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <p>Выберите действие!</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="modal-btn-ok">Ok</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--            Модальный конфирм-->
+
+    </div>
+  </div>
+  </div>
+
+<!--  <script src="my.js"></script>-->
+</body>
+</html>

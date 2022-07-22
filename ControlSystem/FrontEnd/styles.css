@@ -1,0 +1,29 @@
+body{
+  margin-top:20px;
+  background:#f8f8f8
+
+}
+.active-circle {
+  color: green;
+}
+.not-active-circle {
+  color: red;
+}
+.form-check-input {
+  clear: left;
+  margin-left: 10% !important;
+
+
+
+}
+.form-switch.form-switch-xl {
+  margin-bottom: 2rem;
+}
+
+.form-switch.form-switch-xl .form-check-input {
+  height: 2rem;
+  width: calc(4rem + 0.75rem);
+  border-radius: 5rem;
+}
+
+
