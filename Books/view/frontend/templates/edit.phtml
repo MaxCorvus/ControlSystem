@@ -1,0 +1,62 @@
+
+<?php $book = $block->getViewModel()->getAllData(); ?>
+<div class="row">
+    <div class="col-md-8">
+        <form name="addData" method="post" id="addData" class="form"
+              action="<?= $block->getUrl('books/index/edit', ['id' => $book->getId()]); ?>"
+              data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+              data-mage-init='{"validation":{}}'>
+            <fieldset class="fieldset">
+                <legend class="legend"><span><?= $block->escapeHtmlAttr(__('Fill Detail')) ?></span></legend>
+                <fieldset class="fieldset row">
+                    <?php if ($book->getId()) : ?>
+                        <input type="hidden" name="id" value="<?= $book->getId(); ?>">
+                    <?php endif; ?>
+                    <div class="fields col-md-6">
+                        <div class="field name required">
+                            <label class="label"
+                                   for="title"><span><?= $escaper->escapeHtmlAttr(__('Author')) ?></span></label>
+                            <div class="control">
+                                <input name="author" id="author" title="author" value="<?= $book->getAuthor() ?>"
+                                       class="input-text"
+                                       type="text"
+                                       data-validate="{required:true, 'validate-alphanum-with-spaces':true}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields col-md-6">
+                        <div class="field name required">
+                            <label class="label"
+                                   for="title"><span><?= $block->escapeHtmlAttr(__('Name')) ?></span></label>
+                            <div class="control">
+                                <input name="name" id="name" title="Name" value="<?= $book->getName() ?>"
+                                       class="input-text"
+                                       type="text"
+                                       data-validate="{required:true, 'validate-alphanum-with-spaces':true}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields col-md-6">
+                        <div class="field name required">
+                            <label class="label"
+                                   for="title"><span><?= $escaper->escapeHtmlAttr(__('Volume')) ?></span></label>
+                            <div class="control">
+                                <input name="author" id="volume" title="volume" value="<?= $book->getVolume() ?>"
+                                       class="input-number"
+                                       type="number"
+                                       data-validate="{required:true, 'validate-alphanum-with-spaces':true}">
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </fieldset>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" class="action submit primary" title="Save">
+                        <span><?= $escaper->escapeHtmlAttr(__('Save')) ?></span></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

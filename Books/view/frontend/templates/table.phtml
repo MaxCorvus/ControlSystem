@@ -1,0 +1,53 @@
+<?php $collection = $block->getViewModel()->getBooksCollection(); ?>
+<?php if (count($collection) > 0) : ?>
+
+    <div class="table-wrapper orders-history">
+
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?= __('Grid Record') ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?= __('ID') ?></th>
+                <th scope="col" class="col name"><?= __('Author') ?></th>
+                <th scope="col" class="col-author"><?= __('Name') ?></th>
+                <th scope="col" class="col-volume"><?= __('Volume') ?></th>
+                <th scope="col" class="col-created_at"><?= __('Created At') ?></th>
+                <th scope="col" class="col-updated_at"><?= __('Update At') ?></th>
+                <th scope="col" class="col action"><?= __('Action') ?></th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <?php foreach ($collection as $item): ?>
+                <tr>
+                    <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col id">
+                        <?= $item->getId(); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Author')) ?>" class="col name">
+                        <?= $item->getAuthor(); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Name')) ?>" class="col author">
+                        <?= $item->getName(); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Volume')) ?>" class="col volume">
+                        <?= $item->getVolume(); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Created At')) ?>"
+                        class="col title"><?= date('Y-m-d', strtotime($item->getCreatedAt())); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Updated At')) ?>" class="col-updated_at">
+                        <?= $item->getUpdatedAt(); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtml(__('Action')) ?>" class="col delete">
+                        <a href="<?= $block->getUrl('books/index/delete', ['id' => $item->getId()]); ?>"><?= __('Delete') ?></a>
+                        <a style="margin-left: 9px"
+                           href="<?= $block->getUrl('books/index/edit', ['id' => $item->getId()]); ?>"><?= __('Edit') ?></a>
+                    </td>
+
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif; ?>
