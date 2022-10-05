@@ -1,9 +1,9 @@
 
-<?php $book = $block->getViewModel()->getAllData(); ?>
+<?php $book = $block->getViewModel()->getBook(); ?>
 <div class="row">
     <div class="col-md-8">
         <form name="addData" method="post" id="addData" class="form"
-              action="<?= $block->getUrl('books/index/edit', ['id' => $book->getId()]); ?>"
+              action="<?= $block->getUrl('books/index/save'); ?>"
               data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
               data-mage-init='{"validation":{}}'>
             <fieldset class="fieldset">
@@ -41,7 +41,7 @@
                             <label class="label"
                                    for="title"><span><?= $escaper->escapeHtmlAttr(__('Volume')) ?></span></label>
                             <div class="control">
-                                <input name="author" id="volume" title="volume" value="<?= $book->getVolume() ?>"
+                                <input name="volume" id="volume" title="volume" value="<?= $book->getVolume() ?>"
                                        class="input-number"
                                        type="number"
                                        data-validate="{required:true, 'validate-alphanum-with-spaces':true}">

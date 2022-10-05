@@ -1,5 +1,5 @@
 <?php $collection = $block->getViewModel()->getBooksCollection(); ?>
-<?php if (count($collection) > 0) : ?>
+<?php if (count($collection)) : ?>
 
     <div class="table-wrapper orders-history">
 
@@ -12,7 +12,7 @@
                 <th scope="col" class="col-author"><?= __('Name') ?></th>
                 <th scope="col" class="col-volume"><?= __('Volume') ?></th>
                 <th scope="col" class="col-created_at"><?= __('Created At') ?></th>
-                <th scope="col" class="col-updated_at"><?= __('Update At') ?></th>
+                <th scope="col" class="col-updated_at"><?= __('Updated At') ?></th>
                 <th scope="col" class="col action"><?= __('Action') ?></th>
 
             </tr>
@@ -24,10 +24,10 @@
                     <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col id">
                         <?= $item->getId(); ?>
                     </td>
-                    <td data-th="<?= $escaper->escapeHtml(__('Author')) ?>" class="col name">
+                    <td data-th="<?= $escaper->escapeHtml(__('Author')) ?>" class="col author">
                         <?= $item->getAuthor(); ?>
                     </td>
-                    <td data-th="<?= $escaper->escapeHtml(__('Name')) ?>" class="col author">
+                    <td data-th="<?= $escaper->escapeHtml(__('Name')) ?>" class="col name">
                         <?= $item->getName(); ?>
                     </td>
                     <td data-th="<?= $escaper->escapeHtml(__('Volume')) ?>" class="col volume">
@@ -49,5 +49,8 @@
             <?php endforeach; ?>
             </tbody>
         </table>
+        <a class="action primary" href="<?= $block->getUrl('books/index/edit') ?>">
+            <?= __('Add Book') ?>
+        </a>
     </div>
 <?php endif; ?>

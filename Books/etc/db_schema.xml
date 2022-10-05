@@ -2,7 +2,7 @@
 
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="Books" resource="default" engine="innodb">
+    <table name="books" resource="default" engine="innodb">
         <column xsi:type="int" name="book_id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
         <column xsi:type="varchar" name="author" nullable="false" length="255" comment="Author"/>
         <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Name"/>

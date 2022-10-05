@@ -12,7 +12,7 @@ class Edit implements ArgumentInterface
     protected $request;
     public function __construct(
         RequestInterface $request,
-        BookRepository $repository,
+        BooksRepository $repository,
 
 
     ) {
@@ -20,10 +20,14 @@ class Edit implements ArgumentInterface
         $this->bookRepository = $repository;
     }
 
-    public function getAllData() {
+    public function getBook() {
         $id = $this->request->getParam('id');
+        if ($id){
         $book = $this->bookRepository->getById($id);
         return $book;
+        }
+        return $this->bookRepository->getInstance();
+        
     }
 
 }

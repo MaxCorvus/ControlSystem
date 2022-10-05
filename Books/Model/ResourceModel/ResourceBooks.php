@@ -13,6 +13,6 @@ class ResourceBooks extends AbstractDb
     
     protected function _construct()
     {
-        $this->_init('Books', 'book_id');
+        $this->_init('books', 'book_id');
     }
 }

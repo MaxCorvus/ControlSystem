@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Max_Books::books" title="Books" module="Max_Books" sortOrder="20"
+             resource="Max_Books::books" action="view"/>
+    </menu>
+</config>
