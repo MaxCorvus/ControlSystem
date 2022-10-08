@@ -19,8 +19,9 @@ class View implements HttpGetActionInterface
 
     public function execute()
     {
-        return $this->result->create();
-
+        $resultPage = $this->result->create();
+        $resultPage->getConfig()->getTitle()->prepend((__('Books')));
+        return $resultPage;
     }
 
 }

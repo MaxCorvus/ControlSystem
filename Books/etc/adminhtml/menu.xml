@@ -3,6 +3,6 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Max_Books::books" title="Books" module="Max_Books" sortOrder="20"
-             resource="Max_Books::books" action="view"/>
+             resource="Max_Books::books" action="books/index/view"/>
     </menu>
 </config>

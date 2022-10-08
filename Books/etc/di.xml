@@ -4,4 +4,5 @@
                 type="Max\Books\Model\Books" />
     <preference for="Max\Books\Api\BooksRepositoryInterface"
                 type="Max\Books\Model\BooksRepository" />
+    
 </config>
