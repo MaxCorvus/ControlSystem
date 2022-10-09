@@ -4,5 +4,5 @@
                 type="Max\Books\Model\Books" />
     <preference for="Max\Books\Api\BooksRepositoryInterface"
                 type="Max\Books\Model\BooksRepository" />
-    
+    <preference for="Max\Books\Api\Data\BooksSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 </config>
