@@ -22,16 +22,16 @@
             <?php foreach ($collection as $item): ?>
                 <tr>
                     <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col id">
-                        <?= $item->getId(); ?>
+                        <?= $escaper->escapeHtml($item->getId()); ?>
                     </td>
                     <td data-th="<?= $escaper->escapeHtml(__('Author')) ?>" class="col author">
-                        <?= $item->getAuthor(); ?>
+                        <?= $escaper->escapeHtml($item->getAuthor()); ?>
                     </td>
                     <td data-th="<?= $escaper->escapeHtml(__('Name')) ?>" class="col name">
-                        <?= $item->getName(); ?>
+                        <?= $escaper->escapeHtml($item->getName()); ?>
                     </td>
                     <td data-th="<?= $escaper->escapeHtml(__('Volume')) ?>" class="col volume">
-                        <?= $item->getVolume(); ?>
+                        <?= $escaper->escapeHtml($item->getVolume()); ?>
                     </td>
                     <td data-th="<?= $escaper->escapeHtml(__('Created At')) ?>"
                         class="col title"><?= date('Y-m-d', strtotime($item->getCreatedAt())); ?>

@@ -1,13 +1,13 @@
 
 <?php $book = $block->getViewModel()->getBook(); ?>
-<div class="row">
+<div class="row maxcorvus-form">
     <div class="col-md-8">
-        <form name="addData" method="post" id="addData" class="form"
+        <form name="addBook" method="post" id="addBook" class="form"
               action="<?= $block->getUrl('books/index/save'); ?>"
               data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
               data-mage-init='{"validation":{}}'>
             <fieldset class="fieldset">
-                <legend class="legend"><span><?= $block->escapeHtmlAttr(__('Fill Detail')) ?></span></legend>
+                <legend class="legend"><span><?= $escaper->escapeHtmlAttr(__('Fill Detail')) ?></span></legend>
                 <fieldset class="fieldset row">
                     <?php if ($book->getId()) : ?>
                         <input type="hidden" name="id" value="<?= $book->getId(); ?>">
@@ -17,7 +17,7 @@
                             <label class="label"
                                    for="title"><span><?= $escaper->escapeHtmlAttr(__('Author')) ?></span></label>
                             <div class="control">
-                                <input name="author" id="author" title="author" value="<?= $book->getAuthor() ?>"
+                                <input name="author" id="author" title="author" value="<?= $escaper->escapeHtmlAttr($book->getAuthor()) ?>"
                                        class="input-text"
                                        type="text"
                                        data-validate="{required:true, 'validate-alphanum-with-spaces':true}">
@@ -29,7 +29,7 @@
                             <label class="label"
                                    for="title"><span><?= $block->escapeHtmlAttr(__('Name')) ?></span></label>
                             <div class="control">
-                                <input name="name" id="name" title="Name" value="<?= $book->getName() ?>"
+                                <input name="name" id="name" title="Name" value="<?=$escaper->escapeHtmlAttr($book->getName()) ?>"
                                        class="input-text"
                                        type="text"
                                        data-validate="{required:true, 'validate-alphanum-with-spaces':true}">
@@ -41,7 +41,7 @@
                             <label class="label"
                                    for="title"><span><?= $escaper->escapeHtmlAttr(__('Volume')) ?></span></label>
                             <div class="control">
-                                <input name="volume" id="volume" title="volume" value="<?= $book->getVolume() ?>"
+                                <input name="volume" id="volume" title="volume" value="<?= $escaper->escapeHtmlAttr($book->getVolume()) ?>"
                                        class="input-number"
                                        type="number"
                                        data-validate="{required:true, 'validate-alphanum-with-spaces':true}">
