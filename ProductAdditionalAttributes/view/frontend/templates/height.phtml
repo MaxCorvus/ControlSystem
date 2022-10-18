@@ -1,0 +1,10 @@
+<?php
+$product = $block->getProduct();
+$height = $product->getHeight();
+$show = $product->getData('isShow');
+if (($height) && ($show)): ?>
+    <div>
+        <strong><?= __('Height') ?>:</strong>
+        <?= $product->getHeight() ?>
+    </div>
+<?php endif ?>
