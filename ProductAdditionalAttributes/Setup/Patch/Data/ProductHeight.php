@@ -61,6 +61,8 @@ class ProductHeight implements DataPatchInterface
                 'visible_on_front' => true,
                 'visible' => true,
                 'is_used_in_grid' => true,
+                'group' => 'general',
+                'filterable' => true
                 ]
         );
         $this->eavSetup->addAttribute(
@@ -76,7 +78,9 @@ class ProductHeight implements DataPatchInterface
                 'is_used_in_grid' => true,
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
                 'used_in_product_listing' => true,
-                'visible_on_front' => true
+                'visible_on_front' => true,
+                'group' => 'general',
+                'filterable' => true
             ]
         );
 
