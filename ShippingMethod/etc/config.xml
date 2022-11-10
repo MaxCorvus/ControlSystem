@@ -5,11 +5,11 @@
             <customshipping>
                 <enable>0</enable>
                 <title>Custom Shipping Title</title>
-                <methodName>Custom Shipping Method Name</methodName>
+                <method_name>Custom Shipping Method Name</method_name>
                 <shipping_cost>10</shipping_cost>
                 <sallowspecific>0</sallowspecific>
                 <sort_order>15</sort_order>
-                <model>Max\ShippingMethod\Model\Carrier\ShippingMethod</model>
+                <model>Max\ShippingMethod\Model\Carrier\CustomShipping</model>
             </customshipping>
         </carriers>
     </default>

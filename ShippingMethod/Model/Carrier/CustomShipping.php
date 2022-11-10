@@ -11,9 +11,10 @@ use Magento\Shipping\Model\Rate\ResultFactory;
 use Magento\Quote\Model\Quote\Address\RateResult\MethodFactory;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Checkout\Helper\Cart;
+use Psr\Log\LoggerInterface;
 
 
-class ShippingMethod extends AbstractCarrier implements CarrierInterface
+class CustomShipping extends AbstractCarrier implements CarrierInterface
 {
     /**
      * @var string
@@ -21,12 +22,13 @@ class ShippingMethod extends AbstractCarrier implements CarrierInterface
     protected $_code = 'customshipping';
     protected $cartHelper;
     protected $checkoutSession;
-    protected array $country_rate =
+    protected array $countryRateList =
         [
         'US' => 3,
 	    'UA' => 2,
 	    'CA' => 7
         ];
+    protected $countryRate;
 
     /**
      * @var bool
@@ -47,11 +49,11 @@ class ShippingMethod extends AbstractCarrier implements CarrierInterface
         ScopeConfigInterface $scopeConfig,
         ErrorFactory $rateErrorFactory,
         ResultFactory $rateResultFactory,
-        \Psr\Log\LoggerInterface $logger,
         MethodFactory $rateMethodFactory,
         CheckoutSession $checkoutSession,
+        LoggerInterface $logger,
         Cart $cart,
-
+        $countryRate,
         array $data = []
     ) {
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
@@ -59,7 +61,7 @@ class ShippingMethod extends AbstractCarrier implements CarrierInterface
         $this->rateResultFactory = $rateResultFactory;
         $this->rateMethodFactory = $rateMethodFactory;
         $this->cartHelper = $cart;
-
+        $this->countryRate = $countryRate;
     }
 
     public function collectRates(RateRequest $request)
@@ -74,40 +76,38 @@ class ShippingMethod extends AbstractCarrier implements CarrierInterface
         $method->setCarrier($this->_code);
         $method->setCarrierTitle($this->getConfigData('title'));
         $method->setMethod($this->_code);
-        $method->setMethodTitle($this->getConfigData('methodName'));
+        $method->setMethodTitle($this->getConfigData('method_name'));
         $shippingPrice = $this->getShippingPrice();
         $method->setPrice($shippingPrice);
         $method->setCost($shippingPrice);
 
         $result->append($method);
-
         return $result;
 
     }
 
     public function getAllowedMethods()
     {
-        return [$this->_code => $this->getConfigData('methodName')];
+        return [$this->_code => $this->getConfigData('method_name')];
     }
 
 
     protected function getShippingPrice()
     {
-        $cartTotalPrice = $this->cartHelper->getQuote()->getBaseGrandTotal();
+        $cartTotalPrice = $this->cartHelper->getQuote()->getBaseSubtotal();
         $shippingCost = (float)$this->getConfigData('shipping_cost');
         $countryRate = $this->getCountryRate();
         $numberOfTotalProductsInCart = $this->cartHelper->getItemsQty();
         $numberOfUniqProductsInCart = $this->cartHelper->getItemsCount();
-        return ($cartTotalPrice*$numberOfUniqProductsInCart*$shippingCost)/($numberOfTotalProductsInCart*$countryRate);
+        return ($cartTotalPrice * $numberOfUniqProductsInCart * $shippingCost) / ($numberOfTotalProductsInCart * $countryRate);
     }
 
     protected function getCountryRate() {
-        $countryRate = 1;
         $shippingAddressId = $this->cartHelper->getQuote()->getShippingAddress()->getCountryId();
-        if (array_key_exists($shippingAddressId, $this->country_rate)) {
-            return $this->country_rate[$shippingAddressId];
+        if (array_key_exists($shippingAddressId, $this->countryRateList)) {
+            return $this->countryRateList[$shippingAddressId];
         }
-        return $countryRate;
+        return $this->countryRate;
     }
 }
 
