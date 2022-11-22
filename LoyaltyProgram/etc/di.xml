@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Max\LoyaltyProgram\Api\Data\CoinInterface"
+                type="Max\LoyaltyProgram\Model\Coin" />
+    <preference for="Max\LoyaltyProgram\Api\CoinRepositoryInterface"
+                type="Max\LoyaltyProgram\Model\CoinRepository" />
+</config>
