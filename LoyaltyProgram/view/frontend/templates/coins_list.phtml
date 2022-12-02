@@ -1,4 +1,6 @@
-<?php $collection = $block->getViewModel()->getBooksCollection(); ?>
+<?php $collection = $block->getViewModel()->getCoinsCollection();
+$viewModel = $block->getViewModel();
+?>
 <?php if (count($collection)) : ?>
 <div class="table-wrapper coins-history">
     <table class="data table table-coins-items history" id="my-coins-table">
@@ -6,7 +8,7 @@
         <tbody>
         <tr>
             <th scope="col" class="col-total"><?= $escaper->escapeHtml(__('Amount of coins:')) ?>
-                <?= 5 ?>
+                <?= $viewModel->getAmountOfCoins() ?>
         </tr>
         </tbody>
     </table>
@@ -26,11 +28,11 @@
         <tbody>
         <?php foreach ($collection as $item): ?>
             <tr>
-                <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col-id">
-                    <?= $escaper->escapeHtml($item->getId()); ?>
-                </td>
-                <td data-th="<?= $escaper->escapeHtml(__('Order ID')) ?>" class="col-amount-of-purchase">
+                <td data-th="<?= $escaper->escapeHtml(__('Occasion')) ?>" class="col-id">
                     <?= $escaper->escapeHtml($item->getOrderId()); ?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Amount of purchase')) ?>" class="col-amount-of-purchase">
+                    <?= $escaper->escapeHtml($item->getAmountOfPurchase()); ?>
                 </td>
                 <td data-th="<?= $escaper->escapeHtml(__('Coins Received')) ?>" class="col-coins-received">
                     <?= $escaper->escapeHtml($item->getCoinsReceived()); ?>
@@ -47,5 +49,5 @@
     </table>
 </div>
 <?php else : ?>
-    <div class="message info empty"><span><?= $escaper->escapeHtml($block->getViewModel()->getEmptyMessage()) ?></span></div>
+    <div class="message info empty"><span><?= $escaper->escapeHtml($viewModel->getEmptyMessage()) ?></span></div>
 <?php endif ?>

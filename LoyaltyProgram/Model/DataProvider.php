@@ -41,7 +41,8 @@ class DataProvider extends AbstractDataProvider
 
     public function getData(): array
     {
-       $customerData = $this->helper->getCurrentCustomerData();
+        $customerId = (int)$this->request->getParam('id');
+        $customerData = $this->coinRepository->getById($customerId);
         if ($customerData === null) {
             return [];
         }

@@ -5,6 +5,7 @@
             <general>
                 <enable>0</enable>
                 <purchase_percent>10</purchase_percent>
+                <show_message>0</show_message>
             </general>
         </loyalty_program>
     </default>
