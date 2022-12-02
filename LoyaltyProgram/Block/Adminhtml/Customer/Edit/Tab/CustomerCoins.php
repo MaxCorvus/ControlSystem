@@ -1,6 +1,6 @@
 <?php
 
-namespace Max\LoyaltyProgram\Block\Adminhtml\Edit\Tab;
+namespace Max\LoyaltyProgram\Block\Adminhtml\Customer\Edit\Tab;
 
 use Magento\Customer\Controller\RegistryConstants;
 use Magento\Ui\Component\Layout\Tabs\TabInterface;
@@ -64,7 +64,7 @@ class CustomerCoins extends Template implements TabInterface
 
     public function getTabUrl()
     {
-        return $this->getUrl('module/*/custom', ['_current' => true]);
+        return $this->getUrl('coins/*/coins', ['_current' => true]);
     }
 
     public function isAjaxLoaded()

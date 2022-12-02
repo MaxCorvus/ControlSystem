@@ -1,0 +1,51 @@
+<?php $collection = $block->getViewModel()->getBooksCollection(); ?>
+<?php if (count($collection)) : ?>
+<div class="table-wrapper coins-history">
+    <table class="data table table-coins-items history" id="my-coins-table">
+        <caption class="table-caption"><?= $escaper->escapeHtml(__('Coins')) ?></caption>
+        <tbody>
+        <tr>
+            <th scope="col" class="col-total"><?= $escaper->escapeHtml(__('Amount of coins:')) ?>
+                <?= 5 ?>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-wrapper coins-history">
+    <table class="data table table-coins-items history" id="coins-history-table">
+        <caption class="table-caption"><?= $escaper->escapeHtml(__('Coins History')) ?></caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col-id"><?= $escaper->escapeHtml(__('Occasion')) ?></th>
+            <th scope="col" class="col-amount-of-purchase"><?= $escaper->escapeHtml(__('Amount of purchase')) ?></th>
+            <th scope="col" class="col-coins-received"><?= $escaper->escapeHtml(__('Coins Received')) ?></th>
+            <th scope="col" class="col-coins-spend"><?= $escaper->escapeHtml(__('Coins Spend')) ?></th>
+            <th scope="col" class="col-insertion-date"><?= $escaper->escapeHtml(__('Date of purchase')) ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($collection as $item): ?>
+            <tr>
+                <td data-th="<?= $escaper->escapeHtml(__('ID')) ?>" class="col-id">
+                    <?= $escaper->escapeHtml($item->getId()); ?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Order ID')) ?>" class="col-amount-of-purchase">
+                    <?= $escaper->escapeHtml($item->getOrderId()); ?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Coins Received')) ?>" class="col-coins-received">
+                    <?= $escaper->escapeHtml($item->getCoinsReceived()); ?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Coins Spend')) ?>" class="col-coins-spend">
+                    <?= $escaper->escapeHtml($item->getCoinsSpend());?>
+                </td>
+                <td data-th="<?= $escaper->escapeHtml(__('Date of purchase')) ?>" class="col-insertion-date">
+                    <?= $escaper->escapeHtml($item->getInsertionDate()); ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<?php else : ?>
+    <div class="message info empty"><span><?= $escaper->escapeHtml($block->getViewModel()->getEmptyMessage()) ?></span></div>
+<?php endif ?>

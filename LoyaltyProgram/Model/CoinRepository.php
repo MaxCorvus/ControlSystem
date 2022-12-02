@@ -10,21 +10,25 @@ use Max\LoyaltyProgram\Api\Data\CoinInterface;
 use Max\LoyaltyProgram\Model\CoinFactory;
 use Max\LoyaltyProgram\Model\ResourceModel\Coin\CollectionFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessor;
 
 class CoinRepository implements CoinRepositoryInterface
 {
     private $resource;
-    private $coinsFactory;
+    public $coinsFactory;
     protected $collectionFactory;
+    protected $collectionProcessor;
 
     public function __construct(
         CoinResource $resource,
         CoinFactory $coinsFactory,
-        CollectionFactory $collectionFactory
+        CollectionFactory $collectionFactory,
+        CollectionProcessor $collectionProcessor
     ) {
         $this->resource = $resource;
-        $this->coinsFactoryFactory = $coinsFactory;
+        $this->coinsFactory = $coinsFactory;
         $this->collectionFactory = $collectionFactory;
+        $this->collectionProcessor = $collectionProcessor;
     }
 
     public function delete(CoinInterface $coin)
@@ -46,7 +50,7 @@ class CoinRepository implements CoinRepositoryInterface
     public function getById($coinId)
     {
         $coin = $this->coinsFactory->create();
-        $coin->resource->load($coin, $coinId);
+        $this->resource->load($coin, $coinId);
         if (!$coin->getId()) {
             throw new NoSuchEntityException(__('No such id exists'));
         }

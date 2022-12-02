@@ -7,7 +7,7 @@ use Magento\Framework\Model\ResourceModel\Db\Context;
 
 class Coin extends AbstractDb
 {
-    private const TABLE_NAME = 'coins';
+    private const TABLE_NAME = 'max_loyaltyprogram_coins';
     private const PRIMARY_KEY = 'id';
 
     public function __construct(Context $context)

@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 
-<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
-    <container name="root" label="Root">
-        <block class="Max\LoyaltyProgram\Block\Adminhtml\Edit\Tab\View\Compared" name="comparedproduct.edit.tab.compared"/>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="content" label="Root">
+        <block class="Max\LoyaltyProgram\Block\Adminhtml\Customer\Edit\Tab\View\CoinsTab" name="coins.tab.view"/>
     </container>
 </layout>
