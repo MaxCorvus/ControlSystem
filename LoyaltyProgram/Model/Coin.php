@@ -32,6 +32,11 @@ class Coin extends AbstractModel implements CoinInterface
         return $this->getData(self::COINS_INSERTION_DATE);
     }
 
+    public function getUpdatedAt()
+    {
+        return $this->getData(self::COINS_UPDATED_AT);
+    }
+
     
     public function setId($id)
     {
@@ -75,11 +80,16 @@ class Coin extends AbstractModel implements CoinInterface
 
     public function setCoinsReceived($coinsReceived)
     {
-        return $this->setData(self::COINS_AMOUNT_OF_PURCHASE, $coinsReceived);
+        return $this->setData(self::COINS_COINS_RECEIVED, $coinsReceived);
     }
 
     public function setCoinsSpend($coinsSpend)
     {
-        return $this->setData(self::COINS_AMOUNT_OF_PURCHASE, $coinsSpend);
+        return $this->setData(self::COINS_COINS_SPEND, $coinsSpend);
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        return $this->setData(self::COINS_UPDATED_AT, $updatedAt);
     }
 }

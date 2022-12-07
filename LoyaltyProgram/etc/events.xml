@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="adminhtml_customer_save_after">
-        <observer name="change_amount_of_coins_by_admin_side" instance="Max\LoyaltyProgram\Observer\AdminUpdateCoins" />
-    </event>
     <event name="checkout_submit_all_after">
         <observer name="change_amount_of_coins_by_customer_side" instance="Max\LoyaltyProgram\Observer\CustomerChangesCoins" />
     </event>

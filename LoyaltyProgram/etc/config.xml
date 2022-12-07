@@ -5,8 +5,17 @@
             <general>
                 <enable>0</enable>
                 <purchase_percent>10</purchase_percent>
-                <show_message>0</show_message>
+                <show_message>1</show_message>
             </general>
         </loyalty_program>
+        <payment>
+            <max_coins>
+                <title>Coins Payment Method</title>
+                <active>1</active>
+                <model>CoinsFacade</model>
+                <order_status>pending</order_status>
+                <can_use_checkout>1</can_use_checkout>
+            </max_coins>
+        </payment>
     </default>
 </config>

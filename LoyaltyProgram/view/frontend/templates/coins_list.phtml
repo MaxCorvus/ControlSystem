@@ -41,7 +41,7 @@ $viewModel = $block->getViewModel();
                     <?= $escaper->escapeHtml($item->getCoinsSpend());?>
                 </td>
                 <td data-th="<?= $escaper->escapeHtml(__('Date of purchase')) ?>" class="col-insertion-date">
-                    <?= $escaper->escapeHtml($item->getInsertionDate()); ?>
+                    <?= $escaper->escapeHtml(($item->getUpdatedAt()) ? $item->getUpdatedAt() : $item->getInsertionDate()); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

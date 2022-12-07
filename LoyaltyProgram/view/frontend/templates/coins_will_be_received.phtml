@@ -1,0 +1,14 @@
+<?php
+/**
+ * @var  Magento\Catalog\Block\Product\View $block
+ */
+$helper = $this->helper(\Max\LoyaltyProgram\Helper\Data::class);
+$price = $block->getProduct()->getFinalPrice();
+$isEnable = $helper->isEnable();
+$isShowMessage = $helper->isShowMessage();
+
+if($isEnable && $isShowMessage)
+{
+    echo __('You will receive %1 coins for purchasing this product.', $helper->calculateReceivedCoins($price));
+}
+?>

@@ -1,0 +1,18 @@
+{
+    "max_loyaltyprogram_coins": {
+        "column": {
+            "id": true,
+            "customer_id": true,
+            "order_id": true,
+            "amount_of_purchase": true,
+            "coins_received": true,
+            "coins_spend": true,
+            "insertion_date": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MAX_LOYALTYPROGRAM_COINS_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true
+        }
+    }
+}

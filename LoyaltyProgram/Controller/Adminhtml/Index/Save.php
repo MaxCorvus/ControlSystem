@@ -42,10 +42,14 @@ class Save extends Action implements HttpPostActionInterface
 
     public function execute()
     {
-
        $id = $this->request->getParam('general')['id'];
-//       $customerId = $this->request->getParam('general')['customer_id'];
-       return $this->result->create(ResultFactory::TYPE_REDIRECT)->setPath('coins/index/coins', ['id' => $id]);
-        
+       $customerId = $this->request->getParam('general')['customer_id'];
+       $orderId = __('Added by Admin');
+       $coinsReceived = $this->request->getParam('general')['coins_received'];
+       $coinsSpend = $this->request->getParam('general')['coins_spend'];
+       $this->helper->updateCoinsValue($id, $orderId, $customerId, $coinsReceived, $coinsSpend);
+       
+       return $this->result->create(ResultFactory::TYPE_REDIRECT)->setPath('customer/index/edit', ['id' => $customerId]);
+
     }
 }

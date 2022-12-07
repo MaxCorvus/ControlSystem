@@ -5,11 +5,12 @@
     <table name="max_loyaltyprogram_coins" resource="default" engine="innodb">
         <column xsi:type="int" name="id" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
         <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" identity="false" comment="Customer Id"/>
-        <column xsi:type="int" name="order_id" unsigned="true" nullable="false" identity="false" comment="Order Id"/>
+        <column xsi:type="varchar" name="order_id"  nullable="false"  comment="Order Id"/>
         <column xsi:type="float" name="amount_of_purchase" unsigned="true" nullable="false" comment="Amount of purchase"/>
         <column xsi:type="float" name="coins_received" unsigned="true" nullable="true" default="0" comment="Amount of coins was received by customer in this order"/>
         <column xsi:type="float" name="coins_spend" unsigned="true" nullable="true" default="0" comment="Amount of coins was spent by customer in this order"/>
         <column xsi:type="timestamp" name="insertion_date" on_update="false" nullable="false" comment="Insertion Date"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="true"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>

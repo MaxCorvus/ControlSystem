@@ -11,6 +11,7 @@ interface CoinInterface
     const COINS_COINS_RECEIVED = 'coins_received';
     const COINS_COINS_SPEND = 'coins_spend';
     const COINS_INSERTION_DATE = 'insertion_date';
+    const COINS_UPDATED_AT = 'updated_at';
 
     public function getId();
     public function getOrderId();
@@ -19,6 +20,7 @@ interface CoinInterface
     public function getCoinsReceived();
     public function getCoinsSpend();
     public function getInsertionDate();
+    public function getUpdatedAt();
     public function setId($id);
     public function setOrderId($orderId);
     public function setCustomerId($customerId);
@@ -26,4 +28,5 @@ interface CoinInterface
     public function setCoinsReceived($coinsReceived);
     public function setCoinsSpend($coinsSpend);
     public function setInsertionDate($insertionDate);
+    public function setUpdatedAt($updatedAt);
 }
