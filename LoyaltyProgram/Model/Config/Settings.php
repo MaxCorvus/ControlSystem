@@ -9,14 +9,13 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Customer\Helper\Session\CurrentCustomer;
 
 class Settings implements ConfigProviderInterface
 {
     const CODE = 'max_coins';
     const XML_PATH_PAYMENT_ENABLE = 'payment/max_coins/active';
     const CHECKOUT_CONFIG_CODE = 'coins';
-    protected $currentCustomer;
+
     /**
      * @var ScopeConfigInterface
      */
@@ -29,8 +28,8 @@ class Settings implements ConfigProviderInterface
      * @var SessionFactory
      */
     private $sessionFactory;
+
     /**
-    
      * Settings constructor.
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
@@ -39,18 +38,16 @@ class Settings implements ConfigProviderInterface
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         StoreManagerInterface $storeManager,
-        SessionFactory $sessionFactory,
-        CurrentCustomer $currentCustomer
+        SessionFactory $sessionFactory
     ) {
-        $this->currentCustomer = $currentCustomer;
         $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
         $this->sessionFactory = $sessionFactory;
     }
     
     public function isActive() {
-
-        return $this->scopeConfig->isSetFlag(self::XML_PATH_PAYMENT_ENABLE);
+        
+        return (bool) $this->scopeConfig->getValue(self::XML_PATH_PAYMENT_ENABLE);
         
     }
 
@@ -59,10 +56,11 @@ class Settings implements ConfigProviderInterface
         /**
          * @var Session $customer
          */
+        $customer = $this->sessionFactory->create();
         return [
             'payment' => [
                 self::CHECKOUT_CONFIG_CODE => [
-                    'enable' => $this->isActive() && $this->currentCustomer->getCustomerId()
+                    'enable' => $this->isActive() && $customer->getCustomerId()
                 ]
             ]
         ];
