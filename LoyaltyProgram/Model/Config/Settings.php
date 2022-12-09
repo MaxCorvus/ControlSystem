@@ -53,14 +53,14 @@ class Settings implements ConfigProviderInterface
 
     public function getConfig()
     {
-        /**
-         * @var Session $customer
-         */
-        $customer = $this->sessionFactory->create();
+//        /**
+//         * @var Session $customer
+//         */
+//        $customer = $this->sessionFactory->create();
         return [
             'payment' => [
                 self::CHECKOUT_CONFIG_CODE => [
-                    'enable' => $this->isActive() && $customer->getCustomerId()
+                    'enable' => 1
                 ]
             ]
         ];

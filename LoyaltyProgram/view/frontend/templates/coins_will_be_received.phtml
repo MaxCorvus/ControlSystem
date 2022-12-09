@@ -4,10 +4,10 @@
  */
 $helper = $this->helper(\Max\LoyaltyProgram\Helper\Data::class);
 $price = $block->getProduct()->getFinalPrice();
-$isEnable = $helper->isEnable();
+$isLoggedIn = $helper->isLoggedIn();
 $isShowMessage = $helper->isShowMessage();
 
-if($isEnable && $isShowMessage)
+if($isShowMessage && $isLoggedIn)
 {
     echo __('You will receive %1 coins for purchasing this product.', $helper->calculateReceivedCoins($price));
 }

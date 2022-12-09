@@ -9,6 +9,12 @@ use Max\LoyaltyProgram\Model\CoinRepository;
 use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Customer\Model\Session;
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\App\Http\Context as HttpContext;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\NotFoundException;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Message\ManagerInterface;
 
 class Data extends AbstractHelper
 {
@@ -17,16 +23,22 @@ class Data extends AbstractHelper
     public const XML_PATH_PURCHASE_PERCENT = 'loyalty_program/general/purchase_percent';
     protected $request;
     protected $coinRepository;
-    protected $session;
+    public $session;
     protected $customerRepository;
+    protected $httpContext;
+    protected $messageManager;
 
     public function __construct(
         Context $context,
         RequestInterface $request,
         CoinRepository $coinRepository,
         Session $session,
-        CustomerRepositoryInterface $customerRepository
+        CustomerRepositoryInterface $customerRepository,
+        HttpContext $httpContext,
+        ManagerInterface $messageManager
     ) {
+        $this->messageManager = $messageManager;
+        $this->httpContext = $httpContext;
         $this->customerRepository = $customerRepository;
         $this->session = $session;
         $this->coinRepository = $coinRepository;
@@ -41,7 +53,10 @@ class Data extends AbstractHelper
 
     public function isShowMessage()
     {
+        if ($this->isEnable()) {
         return $this->scopeConfig->isSetFlag(self::XML_PATH_SHOW_MESSAGE);
+            }
+        return false;
     }
 
     public function calculateReceivedCoins($price)
@@ -52,6 +67,12 @@ class Data extends AbstractHelper
     public function getCustomerId()
     {
         return $this->session->getCustomerId();
+    }
+
+    public function isLoggedIn()
+    {
+        $isLoggedIn = $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+        return $isLoggedIn;
     }
 
     public function getCurrentCustomerCoinsAmount() {
@@ -65,20 +86,35 @@ class Data extends AbstractHelper
     }
 
     public function updateCoinsValue($id, $orderId, $customerId, $coinsReceived, $coinsSpend) {
-        $data = $this->coinRepository->getById($id);
+        try {
+            $data = $this->coinRepository->getById($id);
+            $customer = $this->customerRepository->getById($customerId);
+        }
+        catch (NoSuchEntityException|LocalizedException) {
+            throw new NotFoundException(__('User Not Found'));
+        }
+
         $differenceCoinsReceived = $coinsReceived - $data->getCoinsReceived();
         $differenceCoinsSpend = $coinsSpend - $data->getCoinsSpend();
-        $customer = $this->customerRepository->getById($customerId);
         $coinsAmount =  $customer->getCustomAttribute('coins')->getValue();
         $customer->setCustomAttribute('coins', $coinsAmount + $differenceCoinsReceived - $differenceCoinsSpend);
-        $this->customerRepository->save($customer);
-        
+
         $data->setCoinsReceived($coinsReceived);
         $data->setCoinsSpend($coinsSpend);
         $data->setOrderId($orderId);
         $data->setUpdatedAt(date('d/m/y H:i:s'));
-        $this->coinRepository->save($data);
-        
+
+        try {
+            $this->customerRepository->save($customer);
+            $this->coinRepository->save($data);
+            $this->messageManager->addSuccessMessage(__('Success'));
+        }
+        catch (CouldNotSaveException|LocalizedException $e) {
+            $this->messageManager->addErrorMessage($e->getMessage());
+        } catch (\Exception) {
+            $this->messageManager->addErrorMessage(__('Something went wrong.'));
+        }
+
     }
 
 }

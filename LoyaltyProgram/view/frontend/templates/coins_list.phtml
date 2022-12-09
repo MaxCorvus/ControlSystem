@@ -1,5 +1,7 @@
-<?php $collection = $block->getViewModel()->getCoinsCollection();
+<?php
 $viewModel = $block->getViewModel();
+$collection = $viewModel->getCoinsCollection();
+
 ?>
 <?php if (count($collection)) : ?>
 <div class="table-wrapper coins-history">

@@ -1,3 +1,4 @@
+
 define(
     [
         'uiComponent',
@@ -17,5 +18,4 @@ define(
         }
         return Component.extend({});
     }
-
 );

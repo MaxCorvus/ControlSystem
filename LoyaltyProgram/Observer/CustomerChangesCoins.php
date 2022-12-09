@@ -39,29 +39,31 @@ class CustomerChangesCoins implements ObserverInterface
         $order = $observer->getEvent()->getOrder();
         $orderId = $order->getId();
         $createdAt =  $order->getCreatedAt();
-        $basegrandTotal = $order->getBaseGrandTotal();
+        $baseSubTotal = $order->getBaseSubTotal();
         $customer = $observer->getQuote()->getCustomer();
         $customerId = $order->getCustomerId();
-        $coinsReceived = $this->helper->calculateReceivedCoins($basegrandTotal);
+        $coinsReceived = $this->helper->calculateReceivedCoins($baseSubTotal);
 
         $transaction = $this->coinFactory->create();
         $transaction->setCustomerId($customerId)
                     -> setOrderId($orderId)
-                    -> setAmountOfPurchase($basegrandTotal)
+                    -> setAmountOfPurchase($baseSubTotal)
                     -> setInsertionDate($createdAt);
+        
         if ($paymentMethod == Settings::CODE) {
-            $coinsAmountChange = -$basegrandTotal;
-            $transaction->setCoinsSpend($basegrandTotal);
+            $coinsAmountChange = -$baseSubTotal;
+            $transaction->setCoinsSpend($baseSubTotal);
         }
-        $coinsAmountChange = $coinsReceived;
-        $transaction->setCoinsReceived($coinsReceived);
+        else {
+            $coinsAmountChange = $coinsReceived;
+            $transaction->setCoinsReceived($coinsReceived);
+        }
+        
         $this->coinRepository->save($transaction);
 
         $customerCoinsValue = $customer->getCustomAttribute('coins')?->getValue() ?? 0;
         $newCustomerCoinsValue = $customerCoinsValue + $coinsAmountChange;
         $customer->setCustomAttribute('coins', $newCustomerCoinsValue);
         $this->customerRepository->save($customer);
-
-
     }
 }

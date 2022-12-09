@@ -46,7 +46,6 @@ class CustomerCoins extends Template implements TabInterface
     public function getCustomerId()
     {
         return $this->request->getParam('id');
-//        return $this->_coreRegistry->registry(RegistryConstants::CURRENT_CUSTOMER_ID);
     }
 
     public function isHidden()
