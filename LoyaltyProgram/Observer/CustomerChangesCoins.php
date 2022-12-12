@@ -4,11 +4,14 @@ namespace Max\LoyaltyProgram\Observer;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\LocalizedException;
+use Max\LoyaltyProgram\Api\CoinRepositoryInterface;
 use Max\LoyaltyProgram\Helper\Data;
 use Max\LoyaltyProgram\Model\CoinFactory;
 use Magento\Customer\Model\ResourceModel\CustomerRepository;
-use Max\LoyaltyProgram\Model\CoinRepository;
 use Max\LoyaltyProgram\Model\Config\Settings;
+use Magento\Framework\Message\ManagerInterface;
 
 class CustomerChangesCoins implements ObserverInterface
 {
@@ -16,13 +19,16 @@ class CustomerChangesCoins implements ObserverInterface
     protected $coinFactory;
     protected $customerRepository;
     protected $coinRepository;
+    protected $messageManager;
 
     public function __construct(
+        ManagerInterface $messageManager,
         Data $helper,
         CoinFactory $coinFactory,
         CustomerRepository $customerRepository,
-        CoinRepository $coinRepository
+        CoinRepositoryInterface $coinRepository
     ) {
+        $this->messageManager = $messageManager;
         $this->coinRepository = $coinRepository;
         $this->customerRepository = $customerRepository;
         $this->coinFactory = $coinFactory;
@@ -59,11 +65,20 @@ class CustomerChangesCoins implements ObserverInterface
             $transaction->setCoinsReceived($coinsReceived);
         }
         
-        $this->coinRepository->save($transaction);
 
         $customerCoinsValue = $customer->getCustomAttribute('coins')?->getValue() ?? 0;
         $newCustomerCoinsValue = $customerCoinsValue + $coinsAmountChange;
         $customer->setCustomAttribute('coins', $newCustomerCoinsValue);
-        $this->customerRepository->save($customer);
+
+        try {
+            $this->coinRepository->save($transaction);
+            $this->customerRepository->save($customer);
+            $this->messageManager->addSuccessMessage(__('Success'));
+        }
+        catch (CouldNotSaveException|LocalizedException $e) {
+            $this->messageManager->addErrorMessage($e->getMessage());
+        } catch (\Exception) {
+            $this->messageManager->addErrorMessage(__('Something went wrong.'));
+        }
     }
 }

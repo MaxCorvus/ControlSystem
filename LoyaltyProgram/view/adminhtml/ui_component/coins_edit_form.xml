@@ -62,7 +62,7 @@
                     <rule name="not-negative-amount" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
-                <label translate="true">Add Coins</label>
+                <label translate="true">Coins Received</label>
                 <dataScope>coins_received</dataScope>
             </settings>
         </field>
@@ -78,7 +78,7 @@
                     <rule name="not-negative-amount" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
-                <label translate="true">Delete Coins</label>
+                <label translate="true">Coins Spend</label>
                 <dataScope>coins_spend</dataScope>
             </settings>
         </field>

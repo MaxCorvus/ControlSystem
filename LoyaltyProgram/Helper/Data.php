@@ -5,7 +5,7 @@ namespace Max\LoyaltyProgram\Helper;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Helper\Context;
-use Max\LoyaltyProgram\Model\CoinRepository;
+use Max\LoyaltyProgram\Api\CoinRepositoryInterface;
 use Magento\Customer\Model\ResourceModel\CustomerRepository;
 use Magento\Customer\Model\Session;
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -31,7 +31,7 @@ class Data extends AbstractHelper
     public function __construct(
         Context $context,
         RequestInterface $request,
-        CoinRepository $coinRepository,
+        CoinRepositoryInterface $coinRepository,
         Session $session,
         CustomerRepositoryInterface $customerRepository,
         HttpContext $httpContext,
@@ -76,13 +76,20 @@ class Data extends AbstractHelper
     }
 
     public function getCurrentCustomerCoinsAmount() {
+        
+        if ($this->isLoggedIn()) {
+            try {
+                $customerId = $this->getCustomerId();
+                $customer = $this->customerRepository->getById($customerId);
+                $coinsAmount =  $customer->getCustomAttribute('coins')->getValue();
+            }
+            catch (NoSuchEntityException|LocalizedException) {
+                throw new NotFoundException(__('User Not Found'));
+            }
 
-        $customerId = $this->getCustomerId();
-        if ($customerId) {
-            $customer = $this->customerRepository->getById($customerId);
-            $coinsAmount =  $customer->getCustomAttribute('coins')->getValue();
             return round($coinsAmount, 1);
         }
+        return 0;
     }
 
     public function updateCoinsValue($id, $orderId, $customerId, $coinsReceived, $coinsSpend) {
@@ -97,6 +104,12 @@ class Data extends AbstractHelper
         $differenceCoinsReceived = $coinsReceived - $data->getCoinsReceived();
         $differenceCoinsSpend = $coinsSpend - $data->getCoinsSpend();
         $coinsAmount =  $customer->getCustomAttribute('coins')->getValue();
+        
+        if (($coinsAmount + $differenceCoinsReceived - $differenceCoinsSpend) < 0) {
+            $this->messageManager->addErrorMessage(__('The number of coins cannot be less than zero'));
+            return;
+        }
+        
         $customer->setCustomAttribute('coins', $coinsAmount + $differenceCoinsReceived - $differenceCoinsSpend);
 
         $data->setCoinsReceived($coinsReceived);

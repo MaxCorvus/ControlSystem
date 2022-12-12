@@ -5,7 +5,7 @@ namespace Max\LoyaltyProgram\Model;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use Max\LoyaltyProgram\Model\CoinRepository;
+use Max\LoyaltyProgram\Api\CoinRepositoryInterface;
 use Max\LoyaltyProgram\Model\ResourceModel\Coin\CollectionFactory;
 use Max\LoyaltyProgram\Helper\Data;
 
@@ -23,7 +23,7 @@ class DataProvider extends AbstractDataProvider
         $primaryFieldName,
         $requestFieldName,
         CollectionFactory $collectionFactory,
-        CoinRepository $coinRepository,
+        CoinRepositoryInterface $coinRepository,
         RequestInterface $request,
         DataPersistorInterface $dataPersistor,
         Data $helper,

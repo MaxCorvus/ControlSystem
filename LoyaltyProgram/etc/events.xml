@@ -3,4 +3,7 @@
     <event name="checkout_submit_all_after">
         <observer name="change_amount_of_coins_by_customer_side" instance="Max\LoyaltyProgram\Observer\CustomerChangesCoins" />
     </event>
+    <event name="sales_order_place_before">
+        <observer name="check_coins_amount_before_place_order" instance="Max\LoyaltyProgram\Observer\CheckCoinsAmountBeforePlaceOrder" />
+    </event>
 </config>

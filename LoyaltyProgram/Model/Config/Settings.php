@@ -44,23 +44,23 @@ class Settings implements ConfigProviderInterface
         $this->storeManager = $storeManager;
         $this->sessionFactory = $sessionFactory;
     }
-    
+
     public function isActive() {
-        
+
         return (bool) $this->scopeConfig->getValue(self::XML_PATH_PAYMENT_ENABLE);
-        
+
     }
 
     public function getConfig()
     {
-//        /**
-//         * @var Session $customer
-//         */
-//        $customer = $this->sessionFactory->create();
+        /**
+         * @var Session $customer
+         */
+        $customer = $this->sessionFactory->create();
         return [
             'payment' => [
                 self::CHECKOUT_CONFIG_CODE => [
-                    'enable' => 1
+                    'enable' => $this->isActive() && $customer->getCustomerId()
                 ]
             ]
         ];
