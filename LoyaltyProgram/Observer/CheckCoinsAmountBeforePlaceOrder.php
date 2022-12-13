@@ -1,6 +1,7 @@
 <?php
 
 namespace Max\LoyaltyProgram\Observer;
+
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Message\ManagerInterface;
@@ -22,16 +23,17 @@ class CheckCoinsAmountBeforePlaceOrder implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        if (!$this->helper->isEnable() && !$this->helper->isLoggedIn()) {
-            return;
-        }
         $paymentMethod = $observer->getOrder()->getPayment()->getMethod();
-        $coinsAmount = $this->helper->getCurrentCustomerCoinsAmount();
 
         if ($paymentMethod == Settings::CODE) {
+            if (!$this->helper->isEnable() && !$this->helper->isLoggedIn()) {
+                return;
+            }
             $order = $observer->getEvent()->getOrder();
-            $baseSubTotal = $order->getBaseSubTotal();
-            if ($coinsAmount < $baseSubTotal) {
+            $customer = $observer->getQuote()->getCustomer();
+            $customerCoinsValue = $customer->getCustomAttribute('coins')?->getValue();
+            $baseGrandTotal = $order->getBaseGrandTotal();
+            if ($customerCoinsValue < $baseGrandTotal) {
                 throw new \Exception('You don\'t have enough coins');
             }
         }

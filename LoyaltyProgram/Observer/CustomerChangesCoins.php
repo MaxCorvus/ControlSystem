@@ -46,6 +46,7 @@ class CustomerChangesCoins implements ObserverInterface
         $orderId = $order->getId();
         $createdAt =  $order->getCreatedAt();
         $baseSubTotal = $order->getBaseSubTotal();
+        $baseGrandTotal = $order->getBaseGrandTotal();
         $customer = $observer->getQuote()->getCustomer();
         $customerId = $order->getCustomerId();
         $coinsReceived = $this->helper->calculateReceivedCoins($baseSubTotal);
@@ -57,8 +58,8 @@ class CustomerChangesCoins implements ObserverInterface
                     -> setInsertionDate($createdAt);
         
         if ($paymentMethod == Settings::CODE) {
-            $coinsAmountChange = -$baseSubTotal;
-            $transaction->setCoinsSpend($baseSubTotal);
+            $coinsAmountChange = -$baseGrandTotal;
+            $transaction->setCoinsSpend($baseGrandTotal);
         }
         else {
             $coinsAmountChange = $coinsReceived;
